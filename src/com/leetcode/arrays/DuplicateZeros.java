@@ -3,7 +3,7 @@ package com.leetcode.arrays;
 public class DuplicateZeros {
 
   public static void main(String[] args) {
-    // After adding zeroes should be: 1,0,0,2,3,0,0,4
+    // After adding zeros should be: 1,0,0,2,3,0,0,4
     int[] arr = {1, 0, 2, 3, 0, 4, 5, 0};
     duplicateZeros(arr);
   }
@@ -33,7 +33,7 @@ public class DuplicateZeros {
   public void duplicateZeros2(int[] arr) {
     int zeroes = 0;
 
-    // 1. Count the zeroes
+    // 1. Count the zeros
     for (int i = 0; i < arr.length; i++){
       if(arr[i] == 0){
         zeroes++;

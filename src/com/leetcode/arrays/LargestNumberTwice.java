@@ -24,9 +24,10 @@ public class LargestNumberTwice {
     for (int j = 0; j < nums.length; j++) {
       if (max < 2 * nums[j] && j != maxIndex) {
         max = -1;
+        maxIndex = -1;
       }
     }
 
-    if (max != -1) return maxIndex; else return -1;
+    return maxIndex;
   }
 }

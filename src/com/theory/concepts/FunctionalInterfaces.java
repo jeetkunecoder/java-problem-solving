@@ -57,7 +57,7 @@ public class FunctionalInterfaces {
     );
 
     for (Team t : qualifiedTeamsWithPredicate) {
-      System.out.println(t);
+      System.out.println(t.getName());
     }
   }
 }

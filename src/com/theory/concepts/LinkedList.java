@@ -8,6 +8,11 @@ public class LinkedList {
 
     insertAtTail(n0, 3);
     display(n0);
+
+    System.out.println("Deleting value at tail");
+
+    deleteAtTail(n0);
+    display(n0);
   }
 
   public static ListNode insertAtTail(ListNode head, int data) {
@@ -22,6 +27,19 @@ public class LinkedList {
       }
       current.next = newNode;
     }
+    return head;
+  }
+
+  public static ListNode deleteAtTail(ListNode head) {
+    if (head == null || head.next == null) return null;
+    ListNode current = head;
+    ListNode previous = current;
+
+    while (current.next != null) {
+      previous = current;
+      current = current.next;
+    }
+    previous.next = null;
     return head;
   }
 

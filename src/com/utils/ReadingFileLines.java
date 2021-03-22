@@ -15,7 +15,10 @@ import java.util.stream.Collectors;
 
 public class ReadingFileLines {
 
+    private static final int MAP_SIZE = 5242880; // 5MB Repr.
+
     public static void main(String[] args) throws IOException {
+
 
         /**
          * Technique 1: Use streams of data
@@ -160,6 +163,28 @@ public class ReadingFileLines {
                 String bufferContent = StandardCharsets.UTF_16.decode(mbBuffer).toString();
                 System.out.println(bufferContent);
                 mbBuffer.clear();
+            }
+        }
+
+        /**
+         * Technique 10: Fixed size buffer with MappedByteBuffer
+         * - Handles very large files
+         */
+
+        try (FileChannel fileChannel = (FileChannel.open(chineseFile, EnumSet.of(StandardOpenOption.READ)))) {
+            int position = 0;
+            long length = fileChannel.size();
+
+            while (position < length) {
+                long remaining = length - position;
+                int bytesToMap = (int) Math.min(MAP_SIZE, remaining);
+
+                MappedByteBuffer mbBuffer = fileChannel
+                    .map(FileChannel.MapMode.READ_ONLY, position, bytesToMap);
+
+                // Here we do something with the current buffer
+
+                position += bytesToMap;
             }
         }
     }

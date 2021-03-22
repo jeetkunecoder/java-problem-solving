@@ -4,7 +4,9 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class ReadingFileLines {
 
@@ -88,5 +90,14 @@ public class ReadingFileLines {
                 System.out.println("Line content: " + line);
             }
         }
+
+        /**
+         * Technique 5: Using Java Streams
+         */
+
+        List<String> list = Files.lines(Paths.get("path/to/file"))
+            .filter(line -> line.contains("abc"))
+            .collect(Collectors.toList());
+        
     }
 }

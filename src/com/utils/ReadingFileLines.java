@@ -1,9 +1,14 @@
 package com.utils;
 
 import java.io.*;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -98,6 +103,64 @@ public class ReadingFileLines {
         List<String> list = Files.lines(Paths.get("path/to/file"))
             .filter(line -> line.contains("abc"))
             .collect(Collectors.toList());
-        
+
+        /**
+         * Technique 6: Using FileReader with Charsets
+         */
+
+        Path chineseFile = Paths.get("chinese.txt");
+        try (FileReader fr = new FileReader(chineseFile.toFile(), StandardCharsets.UTF_16)) {
+            int i;
+            while((i = fr.read()) != -1) {
+                System.out.print((char) i);
+            }
+        }
+
+        /**
+         * Technique 7: Using BufferedReader
+         */
+
+        try (BufferedReader br = Files.newBufferedReader(chineseFile, StandardCharsets.UTF_16)) {
+            String line ;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+
+        /**
+         * Technique 8:
+         *
+         * - Combining BufferedReader with InputStreamReader
+         */
+
+        FileInputStream fis = new FileInputStream(chineseFile.toFile());
+        InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_16);
+        try (BufferedReader br = new BufferedReader(isr)) {
+            String line;
+            while((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
+        }
+
+        /**
+         * Technique 9: Using MappedByteBuffer to handle large files
+         * - Creates and modifies huge files while treating them
+         *   as very big arrays.
+         * - They look like they are in memory, even if they're not.
+         *   Everything happens at the native level.
+         */
+
+        try (FileChannel fileChannel = (
+                FileChannel.open(chineseFile, EnumSet.of(StandardOpenOption.READ)))) {
+
+            MappedByteBuffer mbBuffer = fileChannel
+                .map(FileChannel.MapMode.READ_ONLY, 0, fileChannel.size());
+
+            if (mbBuffer != null) {
+                String bufferContent = StandardCharsets.UTF_16.decode(mbBuffer).toString();
+                System.out.println(bufferContent);
+                mbBuffer.clear();
+            }
+        }
     }
 }

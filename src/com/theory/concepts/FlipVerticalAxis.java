@@ -12,7 +12,7 @@ public class FlipVerticalAxis {
   public static void main(String[] args) {
     int[][] matrix = new int[][] {{1, 0}, {2, 0}, {3, 0}};
     System.out.println(Arrays.deepToString(matrix));
-    flipItVerticalAxis(matrix);
+    flipVertAxis(matrix);
     System.out.println(Arrays.deepToString(matrix));
   }
 
@@ -28,6 +28,17 @@ public class FlipVerticalAxis {
         int temp = matrix[row][col];
         matrix[row][col] = matrix[row][colLimit - 1 - col];
         matrix[row][colLimit - 1 - col] = temp;
+      }
+    }
+  }
+
+  public static void flipVertAxis(int[][] matrix) {
+    for (int i = 0; i < matrix.length; i++) {
+      for (int j = 0; j < matrix[i].length / 2; j++) {
+        int end = matrix[i].length - 1;
+        int temp = matrix[i][j];
+        matrix[i][j] = matrix[i][end - j];
+        matrix[i][end - j] = temp;
       }
     }
   }

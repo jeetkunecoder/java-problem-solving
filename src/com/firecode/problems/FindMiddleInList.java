@@ -6,13 +6,13 @@ public class FindMiddleInList {
         ListNode node = new ListNode(5);
         ListNode head = insert(insert(node, 4), 3);
         System.out.println("Size: " + getSize(head));
-        ListNode middleNode = findMiddleNode(head);
+        ListNode middleNode = findMiddleNode2(head);
 
         System.out.println("The node at the middle is: " + middleNode.data);
 
         ListNode even = insert(head, 2);
         System.out.println("Size: " + getSize(even));
-        ListNode middleNode2 = findMiddleNode(even);
+        ListNode middleNode2 = findMiddleNode2(even);
         System.out.println("The node at the middle is: " + middleNode2.data);
     }
 
@@ -31,6 +31,17 @@ public class FindMiddleInList {
         }
 
         return middleNode;
+    }
+
+    public static ListNode findMiddleNode2(ListNode head) {
+        if(head == null) return null;
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null && (fast.next).next != null) {
+            slow = slow.next;
+            fast = (fast.next).next;
+        }
+        return slow;
     }
 
     public static int getSize(ListNode head) {

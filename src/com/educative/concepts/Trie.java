@@ -215,6 +215,30 @@ public class Trie {
             System.out.println("the --- " + output[0]);
         }
     }
+
+    /**
+     *
+     * Time complexity:
+     * Since the array under each node is traversed and checked for children,
+     * the worst case scenario is O(d^h) where d is the size of the alphabet
+     * and h is the length of the longest word in the dictionary
+     */
+
+    public int totalWords(TrieNode root) {
+        int counter = 0;
+
+        if (root.isEndWord) {
+            counter++;
+        }
+
+        for (int i = 0; i < 26; i++) {
+            if (root.children[i] != null) {
+                counter = totalWords(root.children[i]);
+            }
+        }
+
+        return counter;
+    }
 }
 
 class TrieNode {

@@ -42,8 +42,60 @@ public class Trie {
         return t - 'a';
     }
 
+    /**
+     * Inserting a word in a Trie
+     *
+     * Insertion is simple for individual characters
+     * in the trie. If the character is already present,
+     * we follow the path; if that character is not present,
+     * then we insert the corresponding nodes. While inserting
+     * the last node, we must set the value of isEndWord to true.
+     *
+     * - Case 1: The word has no common subsequence. i.e.
+     * No Common Prefix
+     *
+     * For example, if we want to insert the word "any" in a Trie
+     * that only contains the word "the", then we need to insert all
+     * of the characters (a, n, y) as there are no common character
+     * subsequences between "any" and "the".
+     *
+     * - Case 2: The word has a common subsequence. i.e.
+     * Common Prefix Found
+     *
+     * For example, if we want to insert the word "there" into a Trie
+     * that contains the word "their", then the path to "the" already exists.
+     * After that, we need to insert the nodes for 'r' and 'e.
+     *
+     * - Case 3: The word is already present. i.e.
+     * Common Prefix Found
+     *
+     * If we want to insert the word "the" into a trie that consists the
+     * word "their", then the path for the word "the" already exists
+     *
+     */
+
     // Method to insert a key-value pair in the Trie
-    public void insert(TrieNode node) {}
+    public void insert(String key) {
+        if (key == null) {
+            System.out.println("Null keys are not allowed");
+            return;
+        }
+
+        key = key.toLowerCase();
+        TrieNode currentNode = this.root;
+        int index = 0; // to store character index
+
+        for (int level = 0; level < key.length(); level++) {
+            index = getIndex(key.charAt(level));
+            if (currentNode.children[index] == null) {
+                currentNode.children[index] = new TrieNode();
+            }
+            currentNode = currentNode.children[index];
+        }
+
+        // Mark the end character as leaf node
+        currentNode.markAsLeaf();
+    }
 
     // Function to search a given key in the Trie
     public boolean search(String key) {

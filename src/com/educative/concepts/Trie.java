@@ -129,8 +129,65 @@ public class Trie {
     }
 
     // Method to delete given key from Trie
-    public boolean delete(String key) {
-        return false;
+    public void delete(String key) {
+        if ((root == null) || key == null) {
+            System.out.println("Null key or Empty trie error");
+            return;
+        }
+        deleteHelper(key, root, key.length(), 0);
+    }
+
+    public boolean deleteHelper(String key, TrieNode currentNode, int length, int level) {
+        boolean deletedSelf = false;
+
+        if (currentNode == null) {
+            System.out.println("Key " + key + " doesn't exist");
+            return deletedSelf;
+        }
+
+        if (level == length) {
+            if (hasNoChildren(currentNode)) {
+                currentNode = null;
+                deletedSelf = true;
+            }
+            else {
+                currentNode.unmarkLeaf();
+                deletedSelf = false;
+            }
+        }
+        else {
+            TrieNode childNode = currentNode.children[getIndex(key.charAt(level))];
+            boolean childDeleted = deleteHelper(key, childNode, length, level + 1);
+            if (childDeleted) {
+                currentNode.children[getIndex(key.charAt(level))] = null;
+                if (currentNode.isEndWord) {
+                    deletedSelf = false;
+                }
+                else if (!hasNoChildren(currentNode)) {
+                    deletedSelf = false;
+                }
+                else {
+                    currentNode = null;
+                    deletedSelf = true;
+                }
+            }
+            else {
+                deletedSelf = false;
+            }
+        }
+        return deletedSelf;
+    }
+
+    /**
+     * Method to check if a node has no children
+     */
+    private boolean hasNoChildren(TrieNode currentNode) {
+        for (int i = 0; i < currentNode.children.length; i++) {
+            if (currentNode.children[i] != null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static void main(String[] args) {

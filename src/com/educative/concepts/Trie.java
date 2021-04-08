@@ -99,6 +99,20 @@ public class Trie {
 
     // Function to search a given key in the Trie
     public boolean search(String key) {
+        if (key == null) return false;
+        key = key.toLowerCase();
+        TrieNode currentNode = this.root;
+        int index = 0;
+
+        // For every character on the string,
+        // check if exists at the current level
+        for (int level = 0; level < key.length(); level++) {
+            index = getIndex(key.charAt(level));
+            if (currentNode.children[index] == null) return false;
+            currentNode = currentNode.children[index];
+        }
+        if (currentNode.isEndWord) return true;
+
         return false;
     }
 

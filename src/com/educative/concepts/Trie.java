@@ -97,7 +97,19 @@ public class Trie {
         currentNode.markAsLeaf();
     }
 
-    // Function to search a given key in the Trie
+    /**
+     * Function to search a given key in the Trie
+     * Time Complexity: If the length of the word is h,
+     * the worst case scenario would be looking at h
+     * consecutive levels of a trie for a character in the key
+     * being searched for. O(h), where h is the length of the word.
+     *
+     * The presence or absence of each character from the key
+     * in the trie can be determined in O(1) because the size
+     * of the alphabet is fixed. Thus, the running time of search
+     * in a trie is O(h)
+     */
+
     public boolean search(String key) {
         if (key == null) return false;
         key = key.toLowerCase();

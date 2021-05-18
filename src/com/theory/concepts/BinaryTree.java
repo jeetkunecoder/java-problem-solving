@@ -26,8 +26,8 @@ public class BinaryTree {
   public boolean lookup(Node node, int data) {
     if (node == null) return false;
     if (node.data == data) return true;
-    else if (node.data < data) return lookup(node.left, data);
-    else return lookup(node.right, data);
+    else if (node.data < data) return lookup(node.right, data);
+    else return lookup(node.left, data);
   }
 
   public void insert(int data) {

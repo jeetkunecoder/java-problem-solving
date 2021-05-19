@@ -14,6 +14,7 @@ public class Tree {
 
     /**
      * Iterative Insertion
+     *
      * Time complexity: O(h) where h is the height of the tree
      * In the worst case scenario we may have to traverse
      * the tree from root until the deepest leaf node.
@@ -53,7 +54,11 @@ public class Tree {
 
     /**
      * Recursive Insert
-     * @return
+     *
+     * For a Skewed Tree, the time complexity
+     * is potentially O(n), but for a binary tree
+     * the complexity will be O(logN) as it halves
+     * in every step.
      */
     public boolean add(int data) {
         root = recursiveInsert(this.root, data);
